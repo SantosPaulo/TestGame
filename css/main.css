@@ -4,6 +4,10 @@ body {
     background-size: cover;
 }
 
+audio {
+    display: none;
+}
+
 .wrap {
     position: absolute;
     top: 0;

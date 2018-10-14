@@ -4,6 +4,22 @@ var $ = document.querySelector.bind(document),
     $on = document.addEventListener.bind(document);
 
 // --------------------------------------------------------------------------
+// SONG
+
+function playSong() {
+
+    var promise = document.getElementById('song').play();
+
+    if (promise !== undefined) {
+        promise.then(_ => {
+            console.log(_);
+        }).catch(error => {
+            console.warn(error);
+        });
+    }
+}
+
+// --------------------------------------------------------------------------
 // POINTER
 
 var Xmouse, Ymouse;
@@ -77,4 +93,5 @@ function startTimer() {
 $on('DOMContentLoaded', function () {
     followMouse();
     startTimer();
+    playSong();
 });
