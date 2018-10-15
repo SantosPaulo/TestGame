@@ -4,18 +4,60 @@ var $ = document.querySelector.bind(document),
     $on = document.addEventListener.bind(document);
 
 // --------------------------------------------------------------------------
+// HELPER FUNCTIONS
+
+function $removeById(id) {
+    document.getElementById(id).remove();
+}
+
+// --------------------------------------------------------------------------
+// LOADER
+
+var loader = null;
+
+function loadNow(opacity) {
+
+    if (loader === null) {
+        loader = $('#loader');
+    }
+
+    if (opacity <= 0) {
+        displayContent();
+    } else {
+        loader.style.opacity = opacity;
+        setTimeout(function () {
+            loadNow(opacity - 0.05);
+        }, 100);
+    }
+}
+
+function displayContent() {
+    loader.style.display = 'none';
+    $('#gameWorld').style.display = 'block';
+}
+
+// --------------------------------------------------------------------------
 // SONG
 
 function playSong() {
 
-    var promise = document.getElementById('song').play();
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
-    if (promise !== undefined) {
-        promise.then(_ => {
-            console.log(_);
-        }).catch(error => {
-            console.warn(error);
-        });
+    if (!isChrome) {
+        $removeById('song');
+    } else {
+
+        $removeById('iframeAudio');
+
+        var promise = document.getElementById('song').play();
+
+        if (promise !== undefined) {
+            promise.then(_ => {
+                console.log(_);
+            }).catch(error => {
+                console.warn(error);
+            });
+        }
     }
 }
 
@@ -94,4 +136,5 @@ $on('DOMContentLoaded', function () {
     followMouse();
     startTimer();
     playSong();
+    loadNow(1);
 });

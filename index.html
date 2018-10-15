@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Test Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
@@ -12,14 +12,18 @@
     <audio controls="false" id="song">
         <source src="assets/song1.mp3" type="audio/mp3">
     </audio>
-    
-    <div class="wrap">
 
+    <iframe src="assets/song1.mp3" allow="autoplay" id="iframeAudio"></iframe> 
+        
+    <div id="loader">
+        <h1>Prepare to play</h1>
+    </div>
+
+    <div class="wrap" id="gameWorld">
         <div id="score">
             <p><strong>Time: </strong><span id="time">00:00</span></p>
             <p><strong>Score: </strong><span id="points">0000</span> <small>pts</small></p>
         </div>
-
         <div id="ball"></div>
     </div>
 
