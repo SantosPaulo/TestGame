@@ -55,6 +55,7 @@ function displayContent() {
     $('#gameWorld').style.display = 'block';
     ball.style.display = 'block';
     followMouse();
+    initSprites();
 }
 
 // --------------------------------------------------------------------------
@@ -153,6 +154,29 @@ function startTimer() {
 function endGame() {
     $('#options').style.display = 'block';
     ball.remove();
+}
+
+// --------------------------------------------------------------------------
+// ENEMIES
+
+var $enemie1 = $('.enemies1');
+
+var maxLeft = window.innerWidth - $enemie1.clientWidth;
+var maxTop = window.innerHeight - $enemie1.clientHeight;
+
+function enemies1() {
+
+    var leftPos = Math.floor(Math.random() * (maxLeft + 10)),
+        topPos = Math.floor(Math.random() * (maxTop + 10))
+
+    $enemie1.style.left = leftPos + 'px';
+    $enemie1.style.top = topPos + 'px';
+}
+
+function initSprites() {
+    setInterval(function () {
+        enemies1();
+    }, 1000);
 }
 
 // --------------------------------------------------------------------------

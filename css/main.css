@@ -102,3 +102,14 @@ audio {
     color: #8dd9ff;
     border: 1px solid #8dd9ff;
 }
+
+
+
+
+
+.enemies1 {
+    width: 25px;
+    height: 25px;
+    background: blue;
+    position: absolute;
+}
