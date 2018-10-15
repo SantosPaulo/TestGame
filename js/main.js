@@ -11,6 +11,25 @@ function $removeById(id) {
 }
 
 // --------------------------------------------------------------------------
+// CONTROLS
+
+function restart() {
+    window.location.reload();
+}
+
+// --------------------------------------------------------------------------
+// SCORE VARS
+
+var score = '0000',
+    minVal = 10,
+    medVal = 20,
+    maxVal = 30;
+
+function initScore() {
+    $("#points").innerHTML = score;
+}
+
+// --------------------------------------------------------------------------
 // LOADER
 
 var loader = null;
@@ -34,6 +53,8 @@ function loadNow(opacity) {
 function displayContent() {
     loader.style.display = 'none';
     $('#gameWorld').style.display = 'block';
+    ball.style.display = 'block';
+    followMouse();
 }
 
 // --------------------------------------------------------------------------
@@ -129,12 +150,21 @@ function startTimer() {
     }, 1000);
 }
 
+function endGame() {
+    $('#options').style.display = 'block';
+    ball.remove();
+}
+
 // --------------------------------------------------------------------------
 // INITIALIZE 
 
 $on('DOMContentLoaded', function () {
-    followMouse();
+    initScore();
     startTimer();
     playSong();
     loadNow(1);
+
+    setTimeout(function () {
+        endGame();
+    }, 10000);
 });
