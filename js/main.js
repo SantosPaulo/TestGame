@@ -20,13 +20,20 @@ function restart() {
 // --------------------------------------------------------------------------
 // SCORE VARS
 
-var score = '0000',
+var score = 0,
     minVal = 10,
     medVal = 20,
     maxVal = 30;
 
+var points = $("#points");
+
 function initScore() {
-    $("#points").innerHTML = score;
+    points.innerHTML = score;
+}
+
+function increaseScore(val) {
+    var oldScore = parseInt(points.innerHTML);
+    points.innerHTML = oldScore += val;
 }
 
 // --------------------------------------------------------------------------
@@ -41,7 +48,7 @@ function loadNow(opacity) {
     }
 
     if (opacity <= 0) {
-        displayContent();
+        initializeGame();
     } else {
         loader.style.opacity = opacity;
         setTimeout(function () {
@@ -50,7 +57,7 @@ function loadNow(opacity) {
     }
 }
 
-function displayContent() {
+function initializeGame() {
     loader.style.display = 'none';
     $('#gameWorld').style.display = 'block';
     ball.style.display = 'block';
@@ -128,14 +135,16 @@ var followMouse = function followMouse () {
 // --------------------------------------------------------------------------
 // TIMER
 
+var gameClock;
+
 function startTimer() {
     
-    var endTime = 60 * 1;
+    var endTime = 60 * 2;
     var duration = 0;
     var display = $('#time');
     var timer = duration, minutes, seconds;
 
-    var gameClock = setInterval(function () {
+    gameClock = setInterval(function () {
         minutes = parseInt(timer / 60, 10)
         seconds = parseInt(timer % 60, 10);
 
@@ -147,6 +156,7 @@ function startTimer() {
         if (++timer >= endTime) {
             clearInterval(gameClock);
             timer = duration;
+            endGame();
         }
     }, 1000);
 }
@@ -161,14 +171,20 @@ function endGame() {
 
 var $enemie1 = $('.enemies1');
 
-var maxLeft = window.innerWidth - $enemie1.clientWidth;
-var maxTop = window.innerHeight - $enemie1.clientHeight;
+$enemie1.addEventListener('click', function (e) {
+    increaseScore(10);
+    e.target.style.display = 'none';
+});
+
+var maxLeft = window.innerWidth - $enemie1.clientWidth,
+    maxTop = window.innerHeight - $enemie1.clientHeight;
 
 function enemies1() {
 
     var leftPos = Math.floor(Math.random() * (maxLeft + 10)),
         topPos = Math.floor(Math.random() * (maxTop + 10))
 
+    $enemie1.style.display = 'block';
     $enemie1.style.left = leftPos + 'px';
     $enemie1.style.top = topPos + 'px';
 }
@@ -176,7 +192,7 @@ function enemies1() {
 function initSprites() {
     setInterval(function () {
         enemies1();
-    }, 1000);
+    }, 2000);
 }
 
 // --------------------------------------------------------------------------
@@ -187,8 +203,21 @@ $on('DOMContentLoaded', function () {
     startTimer();
     playSong();
     loadNow(1);
+});
 
-    setTimeout(function () {
+$on('keypress', function (e) {
+
+    var spaceKey = 32;
+
+    // exit game
+    if (e.which === spaceKey || e.keyCode === spaceKey) {
+        clearInterval(gameClock);
         endGame();
-    }, 10000);
+    }
+});
+
+$on('click', function (e) {
+    /* console.log(e);
+    console.log(e.screenX, e.screenY);
+    console.log(e.clientX, e.clientY); */
 });

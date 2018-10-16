@@ -103,13 +103,11 @@ audio {
     border: 1px solid #8dd9ff;
 }
 
-
-
-
-
 .enemies1 {
-    width: 25px;
-    height: 25px;
-    background: blue;
+    width: 50px;
+    height: 50px;
+    background: transparent url('../assets/Red_Bomb_.png') no-repeat center center;
     position: absolute;
+    display: none;
+    z-index: 9999 !important;
 }
